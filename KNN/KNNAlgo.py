@@ -1,7 +1,6 @@
 import matplotlib.pyplot as py_plot
 from scipy.io import loadmat
 from sklearn.neighbors import KNeighborsClassifier
-from sklearn.metrics import zero_one_loss
 
 
 class KNNAlgorithm:
@@ -15,7 +14,7 @@ class KNNAlgorithm:
             self.path = path
             self.__mat_raw = loadmat(path)
 
-    # show_image is used to display images from the data source graphically !
+    # show_image is used to display images from the data source graphically
     def show_image(self):
         if self.__mat_raw is None:
             print("Please add mat file to show image ")
@@ -29,7 +28,10 @@ class KNNAlgorithm:
                 individual_image = self.__mat_raw[image]
                 print(image)
                 for i in range(0, 10):
-                    plot = py_plot.imshow(individual_image[:, :, i])
+                    # Inspired from a question in stack overflow
+                    # Stackoverflow Page : https://stackoverflow.com/questions/51589678/display-image-from-matlab-mat-file-on-python
+                    # Date Visited : September 17th 2021 5.32 PM / IST (Indian Standard Time)
+                    py_plot.imshow(individual_image[:, :, i])
                     py_plot.show()
 
     # train is to interact with sklearn to build a model
@@ -52,8 +54,7 @@ class KNNAlgorithm:
             print("Please train first to test the data set")
             return
         test_samples, test_labels = self.__get_samples_and_labels(to_predict1, to_predict2, "Testing")
-        predictions = self.__knn_clf.predict(test_samples)
-        return 1 - zero_one_loss(test_labels, predictions)
+        return self.__knn_clf.score(test_samples, test_labels)
 
     def __get_label(self, key, to_predict1, to_predict2):
         return to_predict1 if key.find("8") != -1 else to_predict2

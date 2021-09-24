@@ -23,10 +23,8 @@ class KNNAlgorithm:
         image_list = list(self.__mat_raw.keys())
         for image in image_list:
             key = str(image)
-            print(key)
             if (key.find("Training") != - 1) and (key.find("8") != -1 or key.find("9") != -1):
                 individual_image = self.__mat_raw[image]
-                print(image)
                 for i in range(0, 10):
                     # Inspired from a question in stack overflow
                     # Stackoverflow Page : https://stackoverflow.com/questions/51589678/display-image-from-matlab-mat-file-on-python
@@ -42,11 +40,8 @@ class KNNAlgorithm:
 
         self.__knn_clf = KNeighborsClassifier(k_value)
 
-        print("Splitting out samples started ...")
         training_samples, training_labels = self.__get_samples_and_labels(to_train1, to_train2, "Training")
-        print("Training Started ...")
         self.__knn_clf.fit(training_samples, training_labels)
-        print("Done Training start predicting ...")
 
     # test is to interactively test the predictions
     def test(self, to_predict1, to_predict2):
